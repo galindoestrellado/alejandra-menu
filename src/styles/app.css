@@ -516,3 +516,12 @@
 .finalBody{
   padding-top: 18px;
 }
+
+.audioBtn{
+  padding: 10px 12px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+}
