@@ -562,3 +562,58 @@
 #paisa .photoBlock img{
   transform: rotate(-1.5deg);
 }
+
+/* ========================================
+   SECRETO: foto intensa + sello
+======================================== */
+
+.secretCard{
+  border-color: rgba(255,80,130,.28);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.50),
+    0 0 0 1px rgba(255,80,130,.10) inset;
+}
+
+.secretPhoto{
+  position: relative;
+  margin-top: 18px;
+  width: 100%;
+  height: 230px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 22px 60px rgba(0,0,0,.55);
+  background: rgba(255,255,255,.04);
+}
+
+.secretPhoto img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: scale(1.02);
+}
+
+.secretPhotoOverlay{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 300px at 40% 10%, rgba(255,80,130,.22), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.62));
+}
+
+.secretStamp{
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.34);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(10px);
+  color: rgba(255,255,255,.92);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
