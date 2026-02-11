@@ -170,3 +170,37 @@
   gap: 10px;
   justify-items: start;
 }
+
+/* Scroll hint (flechita animada) */
+.scrollHint{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  pointer-events: none;
+  opacity: .85;
+  text-align: center;
+}
+
+.scrollHint__label{
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+}
+
+.scrollHint__chev{
+  font-size: 22px;
+  line-height: 1;
+  color: rgba(255,255,255,.75);
+  animation: bob 1.35s ease-in-out infinite;
+}
+
+@keyframes bob{
+  0%   { transform: translateY(0); opacity: .65; }
+  50%  { transform: translateY(6px); opacity: 1; }
+  100% { transform: translateY(0); opacity: .65; }
+}
