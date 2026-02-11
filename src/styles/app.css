@@ -558,3 +558,7 @@
   color: rgba(255,255,255,.72);
   text-align: center;
 }
+
+#paisa .photoBlock img{
+  transform: rotate(-1.5deg);
+}
