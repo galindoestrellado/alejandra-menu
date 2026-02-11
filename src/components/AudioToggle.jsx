@@ -1,84 +1,46 @@
 import { useEffect, useRef } from "react";
 
-/**
- * Audio ambiental invisible:
- * - Se activa en el primer click de la página
- * - Cambia a modo "secret" cuando window.__xaleMode = "secret"
- */
 export default function AudioToggle() {
-  const ctxRef = useRef(null);
-  const intervalRef = useRef(null);
-  const modeRef = useRef("normal");
-
-  const stop = () => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
-    ctxRef.current?.close?.();
-    ctxRef.current = null;
-  };
-
-  const start = (mode = "normal") => {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    ctxRef.current = ctx;
-    modeRef.current = mode;
-
-    const master = ctx.createGain();
-    master.gain.value = 0.16; // 🔊 volumen ambiente
-    master.connect(ctx.destination);
-
-    const playNote = (freq, duration = 0.7) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = "sine";
-      osc.frequency.value = freq;
-
-      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(1, ctx.currentTime + 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-
-      osc.connect(gain);
-      gain.connect(master);
-
-      osc.start();
-      osc.stop(ctx.currentTime + duration);
-    };
-
-    const normalSeq = [174, 196, 220, 196]; // lounge
-    const secretSeq = [174, 220, 247, 196, 174]; // más tenso
-
-    let i = 0;
-
-    intervalRef.current = setInterval(() => {
-      const seq = modeRef.current === "secret" ? secretSeq : normalSeq;
-      playNote(seq[i % seq.length]);
-      i++;
-    }, 800);
-  };
+  const audioRef = useRef(null);
+  const startedRef = useRef(false);
 
   useEffect(() => {
-    const activate = () => {
-      if (!ctxRef.current) {
-        start("normal");
+    const src = `${import.meta.env.BASE_URL}audio/ambient.mp3`;
+    const a = new Audio(src);
+    a.loop = true;
+    a.preload = "auto";
+    a.volume = 0.35; // 🔊 ajusta aquí (0.0 a 1.0)
+
+    audioRef.current = a;
+
+    const activate = async () => {
+      if (startedRef.current) return;
+      startedRef.current = true;
+
+      try {
+        await a.play();
+      } catch {
+        // si falla, es por política del navegador o porque el archivo no existe
+        // (normalmente con primer click debería ir)
+      } finally {
+        window.removeEventListener("pointerdown", activate);
+        window.removeEventListener("click", activate);
+        window.removeEventListener("touchstart", activate);
       }
-      window.removeEventListener("click", activate);
     };
 
-    window.addEventListener("click", activate);
-
-    const modeWatcher = setInterval(() => {
-      if (window.__xaleMode === "secret" && modeRef.current !== "secret") {
-        stop();
-        start("secret");
-      }
-    }, 300);
+    // varios eventos para cubrir móvil/desktop
+    window.addEventListener("pointerdown", activate, { once: true });
+    window.addEventListener("click", activate, { once: true });
+    window.addEventListener("touchstart", activate, { once: true });
 
     return () => {
-      stop();
-      clearInterval(modeWatcher);
-      window.removeEventListener("click", activate);
+      try {
+        a.pause();
+      } catch {}
+      audioRef.current = null;
     };
   }, []);
 
-  return null; // 👈 No renderiza nada
+  return null; // no renderiza nada
 }
