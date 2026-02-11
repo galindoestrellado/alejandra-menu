@@ -12,6 +12,7 @@ import Principal from "./screens/Principal";
 import Postre from "./screens/Postre";
 import Digestivo from "./screens/Digestivo";
 import SecretMenu from "./screens/SecretMenu";
+import SecretIntro from "./screens/SecretIntro";
 import Final from "./screens/Final";
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
   // IDs en orden. OJO: secret/final solo existen cuando unlocked=true.
   const ids = useMemo(() => {
     const base = ["welcome", "succionadoras", "entrant", "paisa", "principal", "postre", "digestivo", "gate"];
-    return unlocked ? [...base, "secret", "final"] : base;
+    return unlocked ? [...base, "secret-intro", "secret", "final"] : base;
   }, [unlocked]);
 
   // Observa qué pantalla está visible para el indicador
@@ -105,6 +106,7 @@ export default function App() {
         {/* BLOQUEO TOTAL: estas pantallas NO existen hasta que se desbloquea */}
         {unlocked && (
           <>
+            <SecretIntro />
             <SecretMenu />
             <Final onRestart={handleRestart} />
           </>

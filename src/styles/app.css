@@ -105,3 +105,11 @@
     transform: translateY(0);
   }
 }
+
+/* Menú secreto: un pelín más intenso */
+#secret-intro .card,
+#secret .card{
+  background:
+    radial-gradient(800px 400px at 50% 0%, rgba(255,120,120,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+}
