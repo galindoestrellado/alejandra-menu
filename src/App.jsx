@@ -19,6 +19,7 @@ export default function App() {
   const containerRef = useRef(null);
   const [unlocked, setUnlocked] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [run, setRun] = useState(0);
 
   // IDs en orden. OJO: secret/final solo existen cuando unlocked=true.
   const ids = useMemo(() => {
@@ -65,7 +66,8 @@ export default function App() {
 
   const handleRestart = () => {
     setUnlocked(false);
-    setTimeout(() => scrollToId("welcome"), 80);
+    setRun((r) => r + 1);   // ✅ incrementa para activar el easter egg
+    scrollToId("welcome");
   };
 
   return (
@@ -76,7 +78,7 @@ export default function App() {
       </div>
 
       <div className="app" ref={containerRef}>
-        <Welcome />
+        <Welcome run={run} />
         <Succionadoras />
         <EntrantDelPais />
         <LaPaisa />

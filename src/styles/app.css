@@ -428,3 +428,30 @@
     radial-gradient(1100px 700px at 50% 10%, rgba(255,191,128,.16), transparent 62%),
     linear-gradient(180deg, #080816, #101028);
 }
+
+
+/* 🕯️ Vela romántica: movimiento suave solo en secret */
+.screen--secret{
+  position: relative;
+  overflow: hidden;
+}
+
+.screen--secret::before{
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(600px 420px at 30% 20%, rgba(255,160,140,.18), transparent 60%),
+    radial-gradient(520px 420px at 70% 60%, rgba(255,191,128,.14), transparent 62%),
+    radial-gradient(520px 420px at 40% 80%, rgba(170,120,255,.10), transparent 62%);
+  filter: blur(18px);
+  opacity: .85;
+  animation: candle 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes candle{
+  0%   { transform: translate3d(-1%, -1%, 0) scale(1.02); }
+  50%  { transform: translate3d(1.5%, 1.2%, 0) scale(1.04); }
+  100% { transform: translate3d(-1%, -1%, 0) scale(1.02); }
+}

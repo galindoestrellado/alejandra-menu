@@ -41,6 +41,7 @@ export default function PasswordGate({ onUnlock }) {
       setError("");
       navigator.vibrate?.(25);
       playSexyUnlock();
+      window.__xaleMode = "secret";
       onUnlock();
       return;
     }
