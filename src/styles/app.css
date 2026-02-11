@@ -1,1 +1,107 @@
 
+/* Welcome hero overlay + texto encima */
+.hero{
+  position: relative;
+  width: 100%;
+  height: 38vh;              /* 👈 AQUÍ controlamos el tamaño */
+  max-height: 360px;         /* límite para pantallas grandes */
+  min-height: 220px;         /* mínimo para móviles */
+  border-radius: calc(var(--radius) - 4px);
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+.hero img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;         /* 👈 recorta sin deformar */
+  object-position: center;   /* luego podemos jugar con esto */
+  display: block;
+}
+
+
+.heroOverlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.10) 0%,
+    rgba(0,0,0,.22) 35%,
+    rgba(0,0,0,.62) 100%
+  );
+}
+
+.heroText{
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: grid;
+  gap: 6px;
+}
+
+/* Gate un pelín más “noir” */
+.gateCard{
+  background:
+    radial-gradient(900px 400px at 50% 0%, rgba(255,191,128,.12), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+}
+
+.gateActions{
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.app {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.screen {
+  scroll-snap-align: start;
+  height: 100vh;
+  display: flex;
+  align-items: center;        /* 👈 centra vertical */
+  justify-content: center;
+}
+
+.h1{
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(42px, 8vw, 64px);  /* 👈 MÁS GRANDE */
+  line-height: 1.05;
+  margin: 10px 0 12px;
+}
+
+.h2{
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(30px, 6vw, 44px);
+  line-height: 1.1;
+  margin: 6px 0 14px;
+}
+
+.p{
+  font-size: 18px;            /* 👈 antes era muy pequeño */
+  line-height: 1.6;
+}
+
+.card{
+  animation: fadeUp .6s ease-out both;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

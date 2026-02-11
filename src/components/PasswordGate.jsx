@@ -6,6 +6,7 @@ export default function PasswordGate({ onUnlock }) {
 
   const submit = () => {
     if (value.trim().toLowerCase() === "xale") {
+      setError("");
       onUnlock();
     } else {
       setError("Todavía no… 😌");
@@ -13,11 +14,15 @@ export default function PasswordGate({ onUnlock }) {
   };
 
   return (
-    <div className="card">
+    <div className="card gateCard">
       <div className="kicker">Menú secreto</div>
-      <h2 className="h2">🔒 Solo para quien sabe la contraseña</h2>
+      <div className="h2" style={{ marginTop: 8 }}>🔒 Solo para quien sabe la contraseña</div>
 
-      <p className="p muted">Pista: nuestra contraseña. 4 letras.</p>
+      <p className="p muted">
+        Pista: <b>nuestra contraseña</b>. <b>4 letras</b>.
+      </p>
+
+      <div className="divider" />
 
       <input
         className="input"
@@ -27,14 +32,20 @@ export default function PasswordGate({ onUnlock }) {
           setError("");
         }}
         onKeyDown={(e) => e.key === "Enter" && submit()}
-        placeholder="Contraseña…"
+        placeholder="Escribe la contraseña…"
+        autoComplete="off"
       />
 
-      <button className="btn btn--accent" onClick={submit}>
-        Servir
-      </button>
+      <div className="gateActions">
+        <button className="btn btn--accent" onClick={submit}>Servir</button>
+        <button className="btn" onClick={() => setValue("")}>Borrar</button>
+      </div>
 
       {error && <div className="error">{error}</div>}
+
+      <div className="small" style={{ marginTop: 10 }}>
+        (Si la sabes, se abre. Si no… no pasa nada. Aún.)
+      </div>
     </div>
   );
 }
