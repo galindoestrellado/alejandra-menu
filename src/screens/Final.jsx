@@ -15,7 +15,7 @@ export default function Final({ onRestart }) {
           <div className="finalOverlay" />
           <div className="finalTop">
             {/* <div className="kicker">Cierre</div> */}
-            <div className="h2" style={{ margin: 0 }}>🖼️ Lo mejor del menú</div>
+            <div className="h2" style={{ margin: 0 }}>🔥 Lo mejor del menú</div>
           </div>
         </div>
 

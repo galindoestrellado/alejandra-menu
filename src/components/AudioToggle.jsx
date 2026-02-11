@@ -1,47 +1,40 @@
-import React, { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
- * Jazz generado por WebAudio.
- * - "normal": lounge suave
- * - "secret": un pelín más intenso
+ * Audio ambiental invisible:
+ * - Se activa en el primer click de la página
+ * - Cambia a modo "secret" cuando window.__xaleMode = "secret"
  */
 export default function AudioToggle() {
-  const [on, setOn] = useState(false);
-  const [mode, setMode] = useState("normal"); // normal | secret
-
   const ctxRef = useRef(null);
   const intervalRef = useRef(null);
+  const modeRef = useRef("normal");
 
   const stop = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = null;
-
-    const ctx = ctxRef.current;
+    ctxRef.current?.close?.();
     ctxRef.current = null;
-
-    // cerrar audio context
-    ctx?.close?.();
   };
 
-  const start = (nextMode = "normal") => {
+  const start = (mode = "normal") => {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     ctxRef.current = ctx;
+    modeRef.current = mode;
 
-    // volumen base (más fuerte que antes)
     const master = ctx.createGain();
-    master.gain.value = 0.14; // 🔊 sube/baja aquí
+    master.gain.value = 0.16; // 🔊 volumen ambiente
     master.connect(ctx.destination);
 
-    const playNote = (freq, duration = 0.65) => {
+    const playNote = (freq, duration = 0.7) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
       osc.type = "sine";
       osc.frequency.value = freq;
 
-      // envolvente suave
       gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(1.0, ctx.currentTime + 0.08);
+      gain.gain.exponentialRampToValueAtTime(1, ctx.currentTime + 0.1);
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
 
       osc.connect(gain);
@@ -51,48 +44,41 @@ export default function AudioToggle() {
       osc.stop(ctx.currentTime + duration);
     };
 
-    const normalSeq = [220, 247, 196, 174];        // lounge
-    const secretSeq = [220, 262, 247, 196, 174];   // un toque más tenso
-    const seq = nextMode === "secret" ? secretSeq : normalSeq;
+    const normalSeq = [174, 196, 220, 196]; // lounge
+    const secretSeq = [174, 220, 247, 196, 174]; // más tenso
 
     let i = 0;
+
     intervalRef.current = setInterval(() => {
+      const seq = modeRef.current === "secret" ? secretSeq : normalSeq;
       playNote(seq[i % seq.length]);
       i++;
-    }, nextMode === "secret" ? 650 : 800);
+    }, 800);
   };
 
-  const toggle = () => {
-    if (!on) {
-      const forced = window.__xaleMode === "secret" ? "secret" : mode;
-      start(forced);
-      setOn(true);
-    } else {
+  useEffect(() => {
+    const activate = () => {
+      if (!ctxRef.current) {
+        start("normal");
+      }
+      window.removeEventListener("click", activate);
+    };
+
+    window.addEventListener("click", activate);
+
+    const modeWatcher = setInterval(() => {
+      if (window.__xaleMode === "secret" && modeRef.current !== "secret") {
+        stop();
+        start("secret");
+      }
+    }, 300);
+
+    return () => {
       stop();
-      setOn(false);
-    }
-  };
+      clearInterval(modeWatcher);
+      window.removeEventListener("click", activate);
+    };
+  }, []);
 
-  const toggleMode = () => {
-    const next = mode === "normal" ? "secret" : "normal";
-    setMode(next);
-
-    // si está sonando, reinicia con el nuevo modo
-    if (on) {
-      stop();
-      start(next);
-    }
-  };
-
-  return (
-    <div style={{ display: "flex", gap: 8 }}>
-      <button className={`btn ${on ? "btn--accent" : ""}`} onClick={toggle}>
-        {on ? "🎷 Jazz ON" : "🎷 Activar jazz"}
-      </button>
-
-      <button className="btn" onClick={toggleMode} title="Cambiar ambiente">
-        {mode === "secret" ? "😈 Modo secreto" : "🙂 Modo normal"}
-      </button>
-    </div>
-  );
+  return null; // 👈 No renderiza nada
 }

@@ -40,8 +40,8 @@ export default function PasswordGate({ onUnlock }) {
     if (v === "xale") {
       setError("");
       navigator.vibrate?.(25);
-      playSexyUnlock();
       window.__xaleMode = "secret";
+      playSexyUnlock();
       onUnlock();
       return;
     }
