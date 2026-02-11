@@ -1,29 +1,31 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Progress from "./components/Progress.jsx";
-import AudioToggle from "./components/AudioToggle.jsx";
-import PasswordGate from "./components/PasswordGate.jsx";
 
-import Welcome from "./screens/Welcome.jsx";
-import Succionadoras from "./screens/Succionadoras.jsx";
-import EntrantDelPais from "./screens/EntrantDelPais.jsx";
-import LaPaisa from "./screens/LaPaisa.jsx";
-import Principal from "./screens/Principal.jsx";
-import Postre from "./screens/Postre.jsx";
-import Digestivo from "./screens/Digestivo.jsx";
-import SecretMenu from "./screens/SecretMenu.jsx";
-import Final from "./screens/Final.jsx";
+import Progress from "./components/Progress";
+import AudioToggle from "./components/AudioToggle";
+import PasswordGate from "./components/PasswordGate";
+
+import Welcome from "./screens/Welcome";
+import Succionadoras from "./screens/Succionadoras";
+import EntrantDelPais from "./screens/EntrantDelPais";
+import LaPaisa from "./screens/LaPaisa";
+import Principal from "./screens/Principal";
+import Postre from "./screens/Postre";
+import Digestivo from "./screens/Digestivo";
+import SecretMenu from "./screens/SecretMenu";
+import Final from "./screens/Final";
 
 export default function App() {
   const containerRef = useRef(null);
-
-  const ids = useMemo(
-    () => ["welcome", "succionadoras", "entrant", "paisa", "principal", "postre", "digestivo", "gate", "secret", "final"],
-    []
-  );
-
-  const [activeIndex, setActiveIndex] = useState(0);
   const [unlocked, setUnlocked] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
+  // IDs en orden. OJO: secret/final solo existen cuando unlocked=true.
+  const ids = useMemo(() => {
+    const base = ["welcome", "succionadoras", "entrant", "paisa", "principal", "postre", "digestivo", "gate"];
+    return unlocked ? [...base, "secret", "final"] : base;
+  }, [unlocked]);
+
+  // Observa qué pantalla está visible para el indicador
   useEffect(() => {
     const root = containerRef.current;
     if (!root) return;
@@ -56,12 +58,13 @@ export default function App() {
 
   const handleUnlock = () => {
     setUnlocked(true);
-    setTimeout(() => scrollToId("secret"), 200);
+    // Espera a que se rendericen Secret + Final y baja
+    setTimeout(() => scrollToId("secret"), 150);
   };
 
   const handleRestart = () => {
     setUnlocked(false);
-    scrollToId("welcome");
+    setTimeout(() => scrollToId("welcome"), 80);
   };
 
   return (
@@ -80,23 +83,32 @@ export default function App() {
         <Postre />
         <Digestivo />
 
-        {/* Gate */}
-        <section id="gate" className="screen" style={{ background: "linear-gradient(180deg, #07070a, #060610)" }}>
+        {/* Gate (última pantalla si NO está desbloqueado) */}
+        <section
+          id="gate"
+          className="screen"
+          style={{ background: "linear-gradient(180deg, #07070a, #060610)" }}
+        >
           <div className="screen__inner">
             {!unlocked ? (
               <PasswordGate onUnlock={handleUnlock} />
             ) : (
               <div className="card">
                 <div className="kicker">Menú secreto</div>
-                <div className="h2" style={{ marginTop: 8 }}>🔓 Servido</div>
+                <div className="h2" style={{ marginTop: 8 }}>🔓 Desbloqueado</div>
                 <p className="p muted">Baja…</p>
               </div>
             )}
           </div>
         </section>
 
-        <SecretMenu />
-        <Final onRestart={handleRestart} />
+        {/* BLOQUEO TOTAL: estas pantallas NO existen hasta que se desbloquea */}
+        {unlocked && (
+          <>
+            <SecretMenu />
+            <Final onRestart={handleRestart} />
+          </>
+        )}
       </div>
     </>
   );
