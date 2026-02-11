@@ -3,7 +3,7 @@ import Screen from "../components/Screen";
 
 export default function Postre() {
   return (
-    <Screen id="postre">
+    <Screen id="postre" bg="dessert">
       <div className="card">
         <h2 className="h2">🍰 Postre</h2>
         <p className="p">

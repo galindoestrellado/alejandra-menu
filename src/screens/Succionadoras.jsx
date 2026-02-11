@@ -3,7 +3,7 @@ import Screen from "../components/Screen";
 
 export default function Succionadoras() {
     return (
-        <Screen id="succionadoras">
+        <Screen id="succionadoras" bg="olives">
             <div className="card">
                 <h2 className="h2">🫒 Succionadoras</h2>
                 <p className="p">

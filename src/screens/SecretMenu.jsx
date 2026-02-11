@@ -3,7 +3,7 @@ import Screen from "../components/Screen";
 
 export default function SecretMenu() {
   return (
-    <Screen id="secret">
+    <Screen id="secret" bg="secret">
       <div className="card">
         <div className="kicker">Menú secreto</div>
 

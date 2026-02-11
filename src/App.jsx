@@ -85,11 +85,7 @@ export default function App() {
         <Digestivo />
 
         {/* Gate (última pantalla si NO está desbloqueado) */}
-        <section
-          id="gate"
-          className="screen"
-          style={{ background: "linear-gradient(180deg, #07070a, #060610)" }}
-        >
+        <section id="gate" className="screen screen--gate">
           <div className="screen__inner">
             {!unlocked ? (
               <PasswordGate onUnlock={handleUnlock} />

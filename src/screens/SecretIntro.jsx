@@ -3,7 +3,7 @@ import Screen from "../components/Screen";
 
 export default function SecretIntro() {
   return (
-    <Screen id="secret-intro">
+    <Screen id="secret-intro" bg="secret">
       <div className="card">
         <div className="kicker">Fuera de carta</div>
 

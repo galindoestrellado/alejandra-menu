@@ -3,7 +3,7 @@ import Screen from "../components/Screen";
 
 export default function Welcome() {
   return (
-    <Screen id="welcome">
+    <Screen id="welcome" bg="welcome">
       <div className="card">
         <div className="hero">
           <img

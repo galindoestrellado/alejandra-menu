@@ -4,7 +4,7 @@ import RestartButton from "../components/RestartButton";
 
 export default function Final({ onRestart }) {
   return (
-    <Screen id="final">
+    <Screen id="final" bg="final" hint={false}>
       <div className="card finalCard">
         <div className="finalHero">
           <img

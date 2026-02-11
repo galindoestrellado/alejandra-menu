@@ -3,7 +3,7 @@ import Screen from "../components/Screen";
 
 export default function LaPaisa() {
     return (
-        <Screen id="paisa">
+        <Screen id="paisa" bg="paisa">
             <div className="card">
                 <h2 className="h2">🌶️ La Paisa</h2>
                 <p className="p">
