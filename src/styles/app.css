@@ -113,3 +113,60 @@
     radial-gradient(800px 400px at 50% 0%, rgba(255,120,120,.18), transparent 60%),
     linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
 }
+
+/* FINAL cinematográfico */
+.finalCard{
+  padding: 14px;
+}
+
+.finalHero{
+  position: relative;
+  width: 100%;
+  height: 42vh;
+  max-height: 420px;
+  min-height: 260px;
+  border-radius: calc(var(--radius) - 4px);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+.finalHero img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.finalOverlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.10) 0%,
+    rgba(0,0,0,.25) 38%,
+    rgba(0,0,0,.72) 100%
+  );
+}
+
+.finalTop{
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 14px;
+  z-index: 2;
+  display: grid;
+  gap: 6px;
+}
+
+.finalBody{
+  padding: 14px 6px 6px;
+}
+
+.finalActions{
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
