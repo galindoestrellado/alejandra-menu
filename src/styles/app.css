@@ -446,26 +446,73 @@
   100% { transform: translate3d(-1%, -1%, 0) scale(1.02); }
 }
 
-/* Final: etiqueta arriba tipo "pill" para que no parezca un cuadro raro */
-.finalTop{
-  position: absolute;
-  left: 14px;
-  top: 0px;
-  z-index: 2;
+/* =========================================
+   GATE: San Valentín sexy (no muerto)
+========================================= */
 
-  display: inline-grid;
-  gap: 6px;
-
-  padding: 10px 12px;
-  border-radius: 16px;
-
-  background: rgba(0,0,0,.30);
-  border: 1px solid rgba(255,255,255,.14);
-  backdrop-filter: blur(10px);
+.screen--gate{
+  background:
+    radial-gradient(900px 600px at 30% 15%, rgba(255,60,110,.22), transparent 62%),
+    radial-gradient(800px 600px at 75% 85%, rgba(255,191,128,.18), transparent 62%),
+    linear-gradient(180deg, #0b0714, #13102a);
 }
 
-/* Forzar texto claro en el overlay del final */
-.finalTop .kicker,
-.finalTop .h2{
-  color: rgba(255,255,255,.95);
+.gateCard{
+  background:
+    radial-gradient(900px 420px at 50% 0%, rgba(255,60,110,.22), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
+  border-color: rgba(255,120,160,.28);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,120,160,.10) inset;
+}
+
+.gateCard .h2{
+  text-shadow: 0 14px 30px rgba(0,0,0,.55);
+}
+
+.gateCard .kicker{
+  color: rgba(255,191,128,.88);
+}
+
+.gateCard .input{
+  background: rgba(10, 5, 18, .42);
+  border-color: rgba(255,120,160,.26);
+  box-shadow: 0 0 0 1px rgba(255,120,160,.08) inset;
+}
+
+.gateCard .input:focus{
+  border-color: rgba(255,120,160,.44);
+  box-shadow:
+    0 0 0 1px rgba(255,120,160,.18) inset,
+    0 0 28px rgba(255,60,110,.18);
+}
+
+.gateCard .btn--accent{
+  background: rgba(255,60,110,.18);
+  border-color: rgba(255,60,110,.36);
+  box-shadow: 0 0 26px rgba(255,60,110,.14);
+}
+
+/* mini latido sutil para que tenga vida */
+.gateCard .h2{
+  position: relative;
+}
+.gateCard .h2::after{
+  content: "❤";
+  margin-left: 10px;
+  display: inline-block;
+  opacity: .85;
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+
+@keyframes heartbeat{
+  0%   { transform: scale(1); opacity: .70; }
+  35%  { transform: scale(1.12); opacity: 1; }
+  70%  { transform: scale(1); opacity: .78; }
+  100% { transform: scale(1); opacity: .70; }
+}
+
+.finalBody{
+  padding-top: 18px;
 }

@@ -13,13 +13,12 @@ export default function Final({ onRestart }) {
             loading="lazy"
           />
           <div className="finalOverlay" />
-          <div className="finalTop">
-            {/* <div className="kicker">Cierre</div> */}
-            <div className="h2" style={{ margin: 0 }}>🔥 Lo mejor del menú</div>
-          </div>
         </div>
 
         <div className="finalBody">
+          <div className="kicker">Cierre</div>
+          <div className="h2" style={{ margin: 0 }}>🔥 Lo mejor del menú</div>
+
           <p className="p">
             Al final, lo mejor no es lo que se cocina…
           </p>
