@@ -59,9 +59,9 @@ export default function App() {
 
   const handleUnlock = () => {
     setUnlocked(true);
-    // Espera a que se rendericen Secret + Final y baja
-    setTimeout(() => scrollToId("secret"), 150);
+    // NO auto-scroll: se queda en el gate y ella decide
   };
+
 
   const handleRestart = () => {
     setUnlocked(false);
@@ -90,10 +90,19 @@ export default function App() {
             {!unlocked ? (
               <PasswordGate onUnlock={handleUnlock} />
             ) : (
-              <div className="card">
+              <div className="card gateCard">
                 <div className="kicker">Menú secreto</div>
                 <div className="h2" style={{ marginTop: 8 }}>🔓 Desbloqueado</div>
-                <p className="p muted">Baja…</p>
+                <p className="p muted">Cuando estés lista…</p>
+
+                <div className="divider" />
+
+                <button
+                  className="btn btn--accent"
+                  onClick={() => scrollToId("secret-intro")}
+                >
+                  Entrar al menú secreto
+                </button>
               </div>
             )}
           </div>
