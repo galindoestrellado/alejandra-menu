@@ -1,45 +1,34 @@
 import React from "react";
-import Screen from "../components/Screen";
-import RestartButton from "../components/RestartButton";
+import Screen from "../components/Screen.jsx";
 
-export default function Final({ onRestart }) {
+export default function Final() {
+  const restart = () => {
+    // limpiar cualquier estado guardado
+    localStorage.clear();
+
+    // volver arriba
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // pequeño delay y recargar para reiniciar estados
+    setTimeout(() => {
+      window.location.reload();
+    }, 600);
+  };
+
   return (
-    <Screen id="final" bg="final" hint={false}>
+    <Screen id="final" bg="final">
       <div className="card finalCard">
-        <div className="finalHero">
-          <img
-            src={`${import.meta.env.BASE_URL}images/final.jpg`}
-            alt="Nosotros"
-            loading="lazy"
-          />
-          <div className="finalOverlay" />
-        </div>
+        <div className="h2">Lo mejor del menú…</div>
 
-        <div className="finalBody">
-          <div className="kicker">Cierre</div>
-          <div className="h2" style={{ margin: 0 }}>🔥 Lo mejor del menú</div>
+        <p className="p">
+          No estaba en la carta.
+        </p>
 
-          <p className="p">
-            Al final, lo mejor no es lo que se cocina…
-          </p>
+        <div className="divider" />
 
-          <p className="p">
-            es <b>con quién</b>.
-          </p>
-
-          <p className="p muted">
-            Y yo quiero que sea contigo. <span aria-hidden="true">🍷</span>
-          </p>
-
-          <div className="divider" />
-
-          <div className="finalActions">
-            <RestartButton onRestart={onRestart} />
-            <div className="small">
-              (Esta web no se cierra. Se relee.)
-            </div>
-          </div>
-        </div>
+        <button className="btn btn--accent" onClick={restart}>
+          Volver a empezar 🔄
+        </button>
       </div>
     </Screen>
   );

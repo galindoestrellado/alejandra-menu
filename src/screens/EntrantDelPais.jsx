@@ -25,7 +25,7 @@ export default function EntrantDelPais() {
             alt="Nosotros"
           />
           <div className="photoCaption">
-            Cataluña, fuego lento 🔥
+            Catalunya, fuego lento 🔥
           </div>
         </div>
 
